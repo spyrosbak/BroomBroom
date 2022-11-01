@@ -210,6 +210,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1717807198913497400}
   - component: {fileID: 2675179093192172028}
+  - component: {fileID: 8677626402051296389}
+  - component: {fileID: 12375135}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -254,6 +256,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &8677626402051296389
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061857149833270146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.440927, z: 1.109542}
+  m_Center: {x: -8.957712e-17, y: 0.8146916, z: -0.054770604}
+--- !u!114 &12375135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061857149833270146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dddf68492cb87b47bdb037665152033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
 --- !u!1 &2357363331416011528
 GameObject:
   m_ObjectHideFlags: 0
