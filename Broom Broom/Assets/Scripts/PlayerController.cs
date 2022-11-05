@@ -7,22 +7,24 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed = 5.0f;
     private Vector3 position;
     private Quaternion initRot;
+    private Rigidbody broomRB;
     public bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
         position = this.GetComponent<Transform>().position;
-
-        this.transform.Rotate(transform.rotation.x + 15.0f, transform.rotation.y, transform.rotation.z, Space.Self);
         initRot = this.gameObject.GetComponent<Transform>().rotation;
+        broomRB = this.gameObject.GetComponent<Rigidbody>();
+
+        this.transform.Rotate(transform.rotation.x, transform.rotation.y, transform.rotation.z, Space.Self);
     }
 
     // Update is called once per frame
     void Update()
     {
         //Movement
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) && !gameOver)
         {
             if (transform.position.y < 9.0f)
             {
@@ -33,12 +35,13 @@ public class PlayerController : MonoBehaviour
                 position = new Vector3(transform.position.x, 9.0f, transform.position.z);
             }
 
-            if (transform.rotation.x > 0)
+            if (transform.rotation.x > -15)
             {
-                transform.Rotate(-15, 0, 0);
+                //transform.Rotate(-15, 0, 0);
+                this.transform.rotation = Quaternion.Euler(-15, 90, 0);
             }
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) && !gameOver)
         {
             if (transform.position.y > 1.0f)
             {
@@ -66,7 +69,10 @@ public class PlayerController : MonoBehaviour
         {
             gameOver = true;
             Debug.Log("Game Over!");
-            Destroy(gameObject);
+
+            broomRB.AddForce(Vector3.left * 20.0f, ForceMode.Impulse);
+            gameObject.GetComponent<Animator>().enabled = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 }

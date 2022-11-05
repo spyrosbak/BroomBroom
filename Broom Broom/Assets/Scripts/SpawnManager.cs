@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -22,6 +23,13 @@ public class SpawnManager : MonoBehaviour
         if(playerController.gameOver == false)
         {
             Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPositions[Random.Range(0, spawnPositions.Length)], Quaternion.Euler(0, -90, 0));
+            
+            //Finding all pumpkin game objects in the scene
+            var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Pumpkin(Clone)");
+            foreach (GameObject pumpkin in objects)
+            {
+                pumpkin.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 }
