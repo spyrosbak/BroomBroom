@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] ParticleSystem deathVFX;
+    [SerializeField] ParticleSystem vanishVFX;
+
+    public bool gameOver = false;
+
     private float movementSpeed = 5.0f;
     private Vector3 position;
     private Quaternion initRot;
     private Rigidbody broomRB;
-    public bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -71,8 +75,16 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Game Over!");
 
             broomRB.AddForce(Vector3.left * 20.0f, ForceMode.Impulse);
+            deathVFX.gameObject.transform.parent = null;
+            deathVFX.Play();
             gameObject.GetComponent<Animator>().enabled = false;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
+        }
+        else if (collision.gameObject.CompareTag("Ground") && gameOver)
+        {
+            vanishVFX.Play();
+            vanishVFX.gameObject.transform.parent = null;
+            Destroy(gameObject, 0.1f);
         }
     }
 }
