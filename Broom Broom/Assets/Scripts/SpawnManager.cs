@@ -10,17 +10,19 @@ public class SpawnManager : MonoBehaviour
     private float startDelay = 1.0f;
     private float repeatRate = 1.0f;
     private PlayerController playerController;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnEnemies", startDelay, repeatRate);
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     private void SpawnEnemies()
     {
-        if(playerController.gameOver == false)
+        if(playerController.gameOver == false && gameManager.gameStart && !gameManager.gamePaused)
         {
             Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPositions[Random.Range(0, spawnPositions.Length)], Quaternion.Euler(0, -90, 0));
             

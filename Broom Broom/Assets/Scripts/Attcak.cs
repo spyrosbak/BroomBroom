@@ -6,10 +6,12 @@ public class Attcak : MonoBehaviour
 {
     [SerializeField] private float speed;
     private PlayerController playerController;
+    private GameManager gameManager;
 
     private void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -17,7 +19,10 @@ public class Attcak : MonoBehaviour
     {
         if(playerController.gameOver == false)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed, Space.World);
+            if (!gameManager.gamePaused)
+            {
+                transform.Translate(Vector3.left * Time.deltaTime * speed, Space.World);
+            } 
         }
         else
         {

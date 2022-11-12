@@ -9,6 +9,7 @@ public class RepeatBackground : MonoBehaviour
     private float repeatSpeed = 3.0f;
 
     private PlayerController playerController;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -16,12 +17,13 @@ public class RepeatBackground : MonoBehaviour
         startPos = gameObject.transform.position;
         repeatWidth = gameObject.GetComponent<BoxCollider>().size.x / 2;
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerController.gameOver == false)
+        if (playerController.gameOver == false && gameManager.gameStart && !gameManager.gamePaused)
         {
             transform.Translate(Vector3.left * Time.deltaTime * repeatSpeed, Space.World);
         }
