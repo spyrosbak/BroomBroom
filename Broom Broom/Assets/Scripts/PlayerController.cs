@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
             if (transform.rotation.x > -15)
             {
                 //transform.Rotate(-15, 0, 0);
-                this.transform.rotation = Quaternion.Euler(-15, 90, 0);
+                //this.transform.rotation = Quaternion.Euler(-15, 90, 0);
+                this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-15, 90, 0), 0.5f);
             }
         }
         else if (Input.GetKey(KeyCode.DownArrow) && !gameOver)
@@ -58,7 +59,8 @@ public class PlayerController : MonoBehaviour
 
             if (transform.rotation.x < 30)
             {
-                this.transform.rotation = Quaternion.Euler(30, 90, 0);
+                //this.transform.rotation = Quaternion.Euler(30, 90, 0);
+                this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(30, 90, 0), 0.5f);
             }
         }
         else
@@ -67,9 +69,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             gameOver = true;
             Debug.Log("Game Over!");
@@ -80,11 +82,13 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<Animator>().enabled = false;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
-        else if (collision.gameObject.CompareTag("Ground") && gameOver)
+        else if (other.gameObject.CompareTag("Ground") && gameOver)
         {
             vanishVFX.Play();
             vanishVFX.gameObject.transform.parent = null;
             Destroy(gameObject, 0.1f);
+
+            GameObject.Find("GameManager").GetComponent<GameManager>().gameOverPanel.SetActive(true);
         }
     }
 }

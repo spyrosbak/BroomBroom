@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using System;
 using UnityEngine.SceneManagement;
 
@@ -9,15 +9,20 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject instructionsPanel;
     [SerializeField] private GameObject ExitPanel;
-    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI counerText;
     private PlayerController playerController;
+    private float counter;
+    private bool timerRunning = false;
 
     [NonSerialized] public bool gameStart = false;
     [NonSerialized] public bool gamePaused = false;
+    public GameObject gameOverPanel;
 
     // Start is called before the first frame update
     void Start()
     {
+        counter = 4.0f;
+
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         instructionsPanel.SetActive(true);
@@ -28,16 +33,26 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerController.gameOver)
+        if(timerRunning)
         {
-            gameOverPanel.SetActive(true);
+            if (counter > 0)
+            {
+                counter -= Time.deltaTime;
+                CountDown(counter);
+            }
+            else
+            {
+                counerText.gameObject.SetActive(false);
+                gameStart = true;
+                timerRunning = false;
+            }
         }
     }
 
     public void StartGame()
     {
         instructionsPanel.SetActive(false);
-        gameStart = true;
+        timerRunning = true;
     }
 
     public void PauseGame()
@@ -61,5 +76,12 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         instructionsPanel.SetActive(false);
+    }
+
+    private void CountDown(float time)
+    {
+        counerText.gameObject.SetActive(true);
+        float seconds = Mathf.FloorToInt(time % 60);
+        counerText.text = seconds.ToString();
     }
 }
