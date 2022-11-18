@@ -5239,6 +5239,7 @@ MonoBehaviour:
   instructionsPanel: {fileID: 329158069}
   ExitPanel: {fileID: 635003498}
   counerText: {fileID: 1155863644}
+  scoreText: {fileID: 1558661741}
   gameOverPanel: {fileID: 2098078031}
 --- !u!1 &201955863
 GameObject:
@@ -7291,7 +7292,7 @@ GameObject:
   - component: {fileID: 1392714017}
   m_Layer: 0
   m_Name: BackgroundWorld
-  m_TagString: Untagged
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7933,7 +7934,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: -10}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1558661741
 MonoBehaviour:

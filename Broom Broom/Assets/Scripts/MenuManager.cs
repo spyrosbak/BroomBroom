@@ -6,21 +6,35 @@ using UnityEditor;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject SettingsPanel;
-    [SerializeField] private GameObject HighScoresPanel;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject gameplayPanel;
+    [SerializeField] private GameObject objectInScene;
+
     public void Play()
     {
         SceneManager.LoadScene("Main_Scene");
     }
 
+    private void Update()
+    {
+        if(settingsPanel.activeSelf || gameplayPanel.activeSelf)
+        {
+            objectInScene.GetComponent<Animator>().enabled = false;
+        }
+        else
+        {
+            objectInScene.GetComponent<Animator>().enabled = true;
+        }
+    }
+
     public void ShowSettings()
     {
-        SettingsPanel.SetActive(true);
+        settingsPanel.SetActive(true);
     }
 
     public void ShowHighscores()
     {
-        HighScoresPanel.SetActive(true);
+        gameplayPanel.SetActive(true);
     }
 
     public void Exit()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public bool gameOver = false;
 
+    private GameManager gameManager;
     private float movementSpeed = 5.0f;
     private Vector3 position;
     private Quaternion initRot;
@@ -17,6 +19,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         position = this.GetComponent<Transform>().position;
         initRot = this.gameObject.GetComponent<Transform>().rotation;
         broomRB = this.gameObject.GetComponent<Rigidbody>();
@@ -89,6 +93,7 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject, 0.1f);
 
             GameObject.Find("GameManager").GetComponent<GameManager>().gameOverPanel.SetActive(true);
+            GameObject.Find("GameManager").GetComponent<GameManager>().gameOverPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Your final score is " + gameManager.finalScore.ToString();
         }
     }
 }

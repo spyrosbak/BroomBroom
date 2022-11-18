@@ -10,18 +10,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject instructionsPanel;
     [SerializeField] private GameObject ExitPanel;
     [SerializeField] private TextMeshProUGUI counerText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     private PlayerController playerController;
     private float counter;
     private bool timerRunning = false;
+    private int score;
+    
+    public GameObject gameOverPanel;
 
     [NonSerialized] public bool gameStart = false;
     [NonSerialized] public bool gamePaused = false;
-    public GameObject gameOverPanel;
-
+    [NonSerialized] public float finalScore;
+    [NonSerialized] public float addFactor = 0.05f;
+    
     // Start is called before the first frame update
     void Start()
     {
         counter = 4.0f;
+        score = 0;
 
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -46,6 +52,13 @@ public class GameManager : MonoBehaviour
                 gameStart = true;
                 timerRunning = false;
             }
+        }
+
+        if (gameStart && !playerController.gameOver)
+        {
+            score++;
+            finalScore = score * addFactor;
+            scoreText.text = "Score: " + finalScore.ToString("F2");
         }
     }
 
