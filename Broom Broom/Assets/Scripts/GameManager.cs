@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ExitPanel;
     [SerializeField] private TextMeshProUGUI counerText;
     [SerializeField] private TextMeshProUGUI scoreText;
+    private Camera mainCamera;
     private PlayerController playerController;
     private float counter;
     private bool timerRunning = false;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         counter = 4.0f;
         score = 0;
 
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         instructionsPanel.SetActive(true);
@@ -60,6 +62,11 @@ public class GameManager : MonoBehaviour
             finalScore = score * addFactor;
             scoreText.text = "Score: " + finalScore.ToString("F2");
         }
+
+        if (playerController.gameOver)
+        {
+            mainCamera.GetComponent<AudioSource>().Stop();
+        }
     }
 
     public void StartGame()
@@ -87,6 +94,13 @@ public class GameManager : MonoBehaviour
 
     public void Retry()
     {
+        StartCoroutine(TryAgain());
+    }
+
+    private IEnumerator TryAgain()
+    {
+        yield return new WaitForSeconds(0.9f);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         instructionsPanel.SetActive(false);
     }

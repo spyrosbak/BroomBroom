@@ -55,12 +55,12 @@ public class SpawnManager : MonoBehaviour
     private void IncreaseMovement()
     {
         //Increase background Speed
-        repeatBackgroundScript.repeatSpeed += 0.5f;
+        repeatBackgroundScript.repeatSpeed++;
 
         //Increase enemy speed
         foreach (GameObject obstacle in obstacles)
         {
-            speed += 0.5f;
+            speed++;
             obstacle.GetComponent<Attcak>().speed = speed;
         }
 
